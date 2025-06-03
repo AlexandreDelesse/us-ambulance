@@ -1,3 +1,5 @@
+import type { AlertColor } from "@mui/material";
+
 export interface MecanicLog {
   LogId: number;
   LogDate: string;
@@ -10,4 +12,8 @@ export interface MecanicLog {
   Analyse: string | null;
   Action: any[] | null;
   NextDeadLine: string | null;
+}
+
+export interface DisplayMecanicLog extends MecanicLog {
+  Severity: AlertColor;
 }

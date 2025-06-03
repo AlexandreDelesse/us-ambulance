@@ -1,15 +1,24 @@
-import { Alert, AlertTitle, Box } from "@mui/material";
+import { Alert, AlertTitle, Box, Typography } from "@mui/material";
 
-import type { MecanicLog } from "./MecanicLog";
+import type { DisplayMecanicLog } from "./MecanicLog";
 
 interface MecanicLogListProps {
-  mecanicLogList: MecanicLog[];
+  mecanicLogList: DisplayMecanicLog[];
 }
 export default function MecanicLogList(props: MecanicLogListProps) {
+  if (MecanicLogList.length <= 0)
+    return (
+      <Box>
+        <Typography marginY={4} textAlign="center">
+          Aucun incident en cours
+        </Typography>
+      </Box>
+    );
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       {props.mecanicLogList.map((mecanicLog) => (
-        <Alert severity={getLogStatus(mecanicLog.State)} key={mecanicLog.LogId}>
+        <Alert severity={mecanicLog.Severity} key={mecanicLog.LogId}>
           <AlertTitle>
             {mecanicLog.LastStateDate &&
               new Date(mecanicLog.LastStateDate).toLocaleDateString()}
@@ -20,16 +29,3 @@ export default function MecanicLogList(props: MecanicLogListProps) {
     </Box>
   );
 }
-const getLogStatus = (logStatus: number) => {
-  switch (logStatus) {
-    case 1:
-      return "warning";
-    case 2:
-      return "info";
-    case 3:
-      return "success";
-
-    default:
-      return "info";
-  }
-};
