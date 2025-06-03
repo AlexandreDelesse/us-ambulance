@@ -8,6 +8,7 @@ interface ErrorHandlerProps {
   custom404Render?: ReactNode;
   withoutStyle?: boolean;
   complementMsg?: string;
+  onClose?: (e: React.SyntheticEvent) => void;
 }
 export default function ErrorHandler(props: ErrorHandlerProps) {
   const { error, withoutStyle, complementMsg, custom404Render } = props;
@@ -21,7 +22,7 @@ export default function ErrorHandler(props: ErrorHandlerProps) {
 
   if (!withoutStyle)
     return (
-      <Alert sx={{ marginY: 2 }} severity="warning">
+      <Alert sx={{ marginY: 2 }} severity="warning" onClose={props.onClose}>
         {error.message}
         <div>{complementMsg || ""}</div>
       </Alert>

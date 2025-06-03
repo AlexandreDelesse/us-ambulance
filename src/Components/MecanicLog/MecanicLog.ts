@@ -17,3 +17,8 @@ export interface MecanicLog {
 export interface DisplayMecanicLog extends MecanicLog {
   Severity: AlertColor;
 }
+
+export interface MecanicLogCmd {
+  CrewId: number;
+  Constat: string;
+}

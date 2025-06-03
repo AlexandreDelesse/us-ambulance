@@ -16,7 +16,13 @@ export default function MecanicLogList(props: MecanicLogListProps) {
     );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+      }}
+    >
       {props.mecanicLogList.map((mecanicLog) => (
         <Alert severity={mecanicLog.Severity} key={mecanicLog.LogId}>
           <AlertTitle>

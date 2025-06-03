@@ -1,7 +1,11 @@
 import type { AxiosResponse } from "axios";
 import client from "../../api/client";
-import type { DisplayMecanicLog } from "./MecanicLog";
+import type { DisplayMecanicLog, MecanicLogCmd } from "./MecanicLog";
 import type { AlertColor } from "@mui/material";
+
+export const postMecanicLog = async (command: MecanicLogCmd) => {
+  await client.post("MecanicLog", command);
+};
 
 export const getMecanicLogs = async (crewId: number) => {
   const request: AxiosResponse<DisplayMecanicLog[]> = await client.get(

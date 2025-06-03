@@ -5,6 +5,8 @@ import QueryComponent from "../Components/Utils/QueryComponent";
 import useQueryPresenter from "../Components/Utils/useQueryPresenter";
 import { getMecanicLogs } from "../Components/MecanicLog/MecanicLog.service";
 import type { AxiosError } from "axios";
+import { Box } from "@mui/material";
+import MecanicLogForm from "../Components/MecanicLog/MecanicLogForm";
 
 export default function VehiclePage() {
   const presenter = useQueryPresenter<DisplayMecanicLog[]>(
@@ -15,5 +17,10 @@ export default function VehiclePage() {
     queryKey: ["MesanicLogs", 233167],
     queryFn: () => getMecanicLogs(233167),
   });
-  return QueryComponent<DisplayMecanicLog[]>(query, presenter);
+  return (
+    <Box display={"flex"} gap={2} flexDirection={"column"}>
+      <MecanicLogForm />
+      {QueryComponent<DisplayMecanicLog[]>(query, presenter)}
+    </Box>
+  );
 }
