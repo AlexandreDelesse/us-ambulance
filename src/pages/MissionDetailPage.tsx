@@ -7,7 +7,7 @@ import type { JobDetail } from "../Components/JobDetail/JobDetail";
 import JobDetailComponent from "../Components/JobDetail/JobDetailComponent";
 import type { AxiosError } from "axios";
 
-export default function JobDetailPage() {
+export default function MissionDetailPage() {
   const { jobId } = useParams();
 
   const query = useQuery<JobDetail, AxiosError>({

@@ -4,6 +4,7 @@ import BeneficiaryInfos from "./BeneficiaryInfos";
 import FromTo from "../Utils/Templates/FromTo";
 import PropertyDisplay from "../Utils/Templates/PropertyDisplay";
 import TransportInfos from "./TransportInfos";
+import StepProgressContainer from "../Time/StepProgressContainer";
 
 interface JobDetailComponentProps {
   jobDetail: JobDetail;
@@ -15,6 +16,8 @@ export default function JobDetailComponent(props: JobDetailComponentProps) {
       {/* <EditableBeneficiary beneficiary={jobDetail.beneficiary} /> */}
       <BeneficiaryInfos beneficiary={props.jobDetail.Beneficiary} />
 
+      <StepProgressContainer />
+      
       <TransportInfos
         schedule={props.jobDetail.Schedule}
         transportMode={props.jobDetail.TransportMode}

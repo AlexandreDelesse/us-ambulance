@@ -13,7 +13,6 @@ interface BottomNavbarProps {
 }
 export default function BottomNavbar(props: BottomNavbarProps) {
   const location = useLocation();
-  console.log(location);
   const [value, setValue] = React.useState(location.pathname || "");
 
   const navigate = useNavigate();

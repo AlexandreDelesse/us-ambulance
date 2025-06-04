@@ -7,8 +7,8 @@ import HomePage from "./pages/HomePage";
 import MissionsPage from "./pages/MissionsPage";
 import VehiclePage from "./pages/VehiclePage";
 import JobPage from "./pages/JobPage";
-import JobDetailPage from "./pages/JobDetailPage";
 import MainPage from "./pages/MainPage";
+import MissionDetailPage from "./pages/MissionDetailPage";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
               </Route>
 
               <Route path="Missions/:jobId" element={<JobPage />}>
-                <Route index element={<JobDetailPage />} />
+                <Route index element={<MissionDetailPage />} />
               </Route>
 
               <Route path="/*" element={<Page404 />} />
