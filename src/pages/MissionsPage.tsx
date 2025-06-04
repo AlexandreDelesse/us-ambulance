@@ -9,15 +9,21 @@ import Joblist from "../Components/Joblist/Joblist";
 import ErrorHandler from "../Components/Utils/Error/ErrorHandler";
 import LogoLoader from "../Components/Utils/LogoLoader";
 import type { AxiosError } from "axios";
+import { useNavigate } from "react-router";
 
 export default function MissionsPage() {
+  const navigate = useNavigate();
   const query = useQuery<Job[], AxiosError>({
-    queryKey: ["Missions", 232425],
-    queryFn: () => getJoblist(232425),
+    queryKey: ["Missions", 233149],
+    queryFn: () => getJoblist(233149),
   });
 
+  const handleJobClick = (id: string) => navigate(id);
+
   const presenter: QueryPresenter<Job[]> = {
-    presentSuccess: (jobs) => <Joblist joblist={jobs} />,
+    presentSuccess: (jobs) => (
+      <Joblist onClick={handleJobClick} joblist={jobs} />
+    ),
     presentError: (error) => <ErrorHandler error={error} />,
     presentLoading: () => <LogoLoader />,
   };

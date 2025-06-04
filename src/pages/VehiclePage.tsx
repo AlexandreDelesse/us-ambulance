@@ -14,8 +14,8 @@ export default function VehiclePage() {
   );
 
   const query = useQuery<DisplayMecanicLog[], AxiosError>({
-    queryKey: ["MesanicLogs", 233167],
-    queryFn: () => getMecanicLogs(233167),
+    queryKey: ["MesanicLogs", 233149],
+    queryFn: () => getMecanicLogs(233149),
   });
   return (
     <Box display={"flex"} gap={2} flexDirection={"column"}>

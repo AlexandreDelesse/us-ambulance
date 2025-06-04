@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 interface PropertyDisplayProps {
   title: string;
-  content: ReactNode;
+  content?: ReactNode;
   contentColor?: string;
 }
 export default function PropertyDisplay(props: PropertyDisplayProps) {
@@ -15,7 +15,7 @@ export default function PropertyDisplay(props: PropertyDisplayProps) {
         variant="body1"
         color={props.contentColor || "primary"}
       >
-        {props.content}
+        {props.content || null}
       </Typography>
     </Box>
   );

@@ -1,39 +1,36 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router";
-import { AppBar, Avatar, Box, Container, Toolbar } from "@mui/material";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { Box, Container } from "@mui/material";
 import Page404 from "./pages/Page404";
-import logo from "./assets/logo-us.png";
-import UserAvatar from "./Components/User/UserAvatar";
+
 import HomePage from "./pages/HomePage";
 import MissionsPage from "./pages/MissionsPage";
 import VehiclePage from "./pages/VehiclePage";
+import JobPage from "./pages/JobPage";
+import JobDetailPage from "./pages/JobDetailPage";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Box paddingTop={5}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <Avatar src={logo} />
-            {/* For separation */}
-            <Box flex={1} />
-            <UserAvatar />
-          </Toolbar>
-        </AppBar>
         <Container sx={{ mt: 4, px: 0 }}>
           <Routes>
-            <Route
-              path="/"
-              element={<HomePage />}
-              children={
-                <>
+            <Route path="/" element={<MainPage />}>
+              <Route path="/" element={<HomePage />}>
+                <Route index element={<Navigate to="Missions" />} />
+                <Route path="Missions">
                   <Route index element={<MissionsPage />} />
-                  <Route path="Vehicule" element={<VehiclePage />} />
-                </>
-              }
-            />
+                </Route>
+                <Route path="Vehicule" element={<VehiclePage />} />
+              </Route>
 
-            <Route path="/*" element={<Page404 />} />
+              <Route path="Missions/:jobId" element={<JobPage />}>
+                <Route index element={<JobDetailPage />} />
+              </Route>
+
+              <Route path="/*" element={<Page404 />} />
+            </Route>
           </Routes>
         </Container>
       </Box>

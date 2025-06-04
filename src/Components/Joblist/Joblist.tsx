@@ -4,6 +4,7 @@ import JoblistItem from "./JoblistItem";
 
 interface JoblistProps {
   joblist: Job[];
+  onClick: (jobId: string) => void;
 }
 export default function Joblist(props: JoblistProps) {
   return (
@@ -16,7 +17,7 @@ export default function Joblist(props: JoblistProps) {
           <JoblistItem
             key={job.JobId}
             job={job}
-            onClick={(jobId: string) => alert("click" + jobId)}
+            onClick={(jobId: string) => props.onClick(jobId)}
           />
         ))}
       </Box>

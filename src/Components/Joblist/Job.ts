@@ -13,3 +13,8 @@ export interface Job {
   Departure: string;
   Arrival: string;
 }
+
+export interface JobCmd {
+  IsJob: boolean;
+  JobId: string;
+}

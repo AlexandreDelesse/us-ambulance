@@ -6,11 +6,11 @@ interface MecanicLogListProps {
   mecanicLogList: DisplayMecanicLog[];
 }
 export default function MecanicLogList(props: MecanicLogListProps) {
-  if (MecanicLogList.length <= 0)
+  if (props.mecanicLogList.length <= 0)
     return (
       <Box>
         <Typography marginY={4} textAlign="center">
-          Aucun incident en cours
+          Aucun incident signalé
         </Typography>
       </Box>
     );

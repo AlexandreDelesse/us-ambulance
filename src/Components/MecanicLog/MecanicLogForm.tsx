@@ -12,10 +12,10 @@ export default function MecanicLogForm() {
   const [constat, setConstat] = useState("");
 
   const mutation = useMutation({
-    mutationKey: ["MesanicLogs", 233167],
-    mutationFn: () => postMecanicLog({ Constat: constat, CrewId: 233167 }),
+    mutationKey: ["MesanicLogs", 233149],
+    mutationFn: () => postMecanicLog({ Constat: constat, CrewId: 233149 }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["MesanicLogs", 233167] });
+      queryClient.invalidateQueries({ queryKey: ["MesanicLogs", 233149] });
       setShow(!show);
     },
   });

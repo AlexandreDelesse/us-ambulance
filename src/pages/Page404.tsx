@@ -1,14 +1,27 @@
-import { Container } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
 export default function Page404() {
   const navigate = useNavigate();
   return (
-    <Container>
-      <h1 className="text-center mt-5">404 Not found</h1>
-      <p onClick={() => navigate("/")} className="text-center">
-        Retour a la page principale
-      </p>
+    <Container
+      sx={{
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography textAlign={"center"} variant="h5">
+        404 Not found
+      </Typography>
+      <Button
+        sx={{ textAlign: "center" }}
+        onClick={() => navigate("/")}
+        variant="text"
+      >
+        Retour à la page principale
+      </Button>
     </Container>
   );
 }
