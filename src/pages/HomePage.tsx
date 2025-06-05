@@ -7,12 +7,12 @@ import { Outlet } from "react-router";
 export default function HomePage() {
   const links = [
     {
-      pathname: "/",
+      pathname: "Missions",
       label: "Missions",
       icon: <AssignmentIcon />,
     },
     {
-      pathname: "/Vehicule",
+      pathname: "Vehicule",
       label: "Véhicule",
       icon: <TaxiAlertIcon />,
     },

@@ -17,7 +17,7 @@ export default function ErrorHandler(props: ErrorHandlerProps) {
 
   if (isAxiosError(error))
     return (
-      <AxiosErrorHandler error={error} custom404Render={custom404Render} />
+      <AxiosErrorHandler error={error} onClose={props.onClose} custom404Render={custom404Render} />
     );
 
   if (!withoutStyle)

@@ -1,14 +1,14 @@
 import { AppBar, Avatar, Box, Toolbar } from "@mui/material";
 import logo from "../../assets/logo-us.png";
 import UserAvatar from "../User/UserAvatar";
-import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function TopAppBar() {
-  const location = useLocation();
+  const navigate = useNavigate();
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Avatar src={logo} />
+        <Avatar onClick={() => navigate("/")} src={logo} />
         {/* For separation */}
         <Box flex={1} />
         <UserAvatar />
