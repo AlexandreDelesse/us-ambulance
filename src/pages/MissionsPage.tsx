@@ -10,6 +10,7 @@ import ErrorHandler from "../Components/Utils/Error/ErrorHandler";
 import LogoLoader from "../Components/Utils/LogoLoader";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router";
+import DriverContainer from "../Components/Driver/DriverContainer";
 
 export default function MissionsPage() {
   const navigate = useNavigate();
@@ -28,5 +29,10 @@ export default function MissionsPage() {
     presentLoading: () => <LogoLoader />,
   };
 
-  return QueryComponent(query, presenter);
+  return (
+    <>
+      <DriverContainer />
+      {QueryComponent(query, presenter)}
+    </>
+  );
 }

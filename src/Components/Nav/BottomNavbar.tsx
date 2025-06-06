@@ -15,8 +15,8 @@ export default function BottomNavbar(props: BottomNavbarProps) {
   const location = useLocation();
   const paths = location.pathname.split("/");
   const myPath = paths[paths.length - 1];
-  console.log(location)
-  console.log(myPath)
+  console.log(location);
+  console.log(myPath);
   const [value, setValue] = React.useState(myPath || "");
 
   const navigate = useNavigate();

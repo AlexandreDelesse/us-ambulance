@@ -5,11 +5,12 @@ import ErrorHandler from "./Error/ErrorHandler";
 import LogoLoader from "./LogoLoader";
 
 export default function useQueryPresenter<T>(
-  success: (data: T) => ReactNode
+  success: (data: T) => ReactNode,
+  loading?: () => ReactNode
 ): QueryPresenter<T> {
   return {
     presentError: (error: AxiosError) => <ErrorHandler error={error} />,
-    presentLoading: () => <LogoLoader />,
+    presentLoading: loading ? loading : () => <LogoLoader />,
     presentSuccess: success,
   };
 }
