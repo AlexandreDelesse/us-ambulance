@@ -40,7 +40,7 @@ export default function UserAvatar() {
                 height: 24,
                 padding: 1,
                 bgcolor: deepOrange[500],
-                fontSize: 18
+                fontSize: 18,
               }}
             >
               {keycloak.tokenParsed ? UserInitials(keycloak.tokenParsed) : "?"}
@@ -92,7 +92,13 @@ export default function UserAvatar() {
 
           <Divider />
 
-          <MenuItem onClick={() => keycloak.logout()}>
+          <MenuItem
+            onClick={() =>
+              keycloak.logout({
+                redirectUri: "https://dev.delesse.net/",
+              })
+            }
+          >
             <ListItemIcon>
               <LogoutIcon fontSize="small" />
             </ListItemIcon>
