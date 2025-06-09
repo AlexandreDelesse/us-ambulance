@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 // import ReactSignatureCanvas from "react-signature-canvas";
 import SignaturePad from "react-signature-pad-wrapper";
-import { Box, Button, Card } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useParams } from "react-router";
 import { postSignature } from "./Signature.service";
 import type { Signature } from "./Signature";

@@ -1,4 +1,3 @@
-import React from "react";
 import QueryComponent, {
   type QueryPresenter,
 } from "../Components/Utils/QueryComponent";

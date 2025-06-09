@@ -31,7 +31,7 @@ export default function StepProgress(props: StepProgressProps) {
         activeStep={props.activeStep?.index ?? props.steps.length}
         alternativeLabel
       >
-        {props.steps.map((step, index) => (
+        {props.steps.map((step) => (
           <Step key={step.key}>
             <StepButton
               onClick={() => props.onClick(step)}

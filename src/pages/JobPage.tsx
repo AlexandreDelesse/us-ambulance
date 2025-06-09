@@ -23,7 +23,7 @@ export default function JobPage() {
       icon: <DriveFileRenameOutlineIcon />,
     },
   ];
-
+  
   return (
     <Box height="100%" paddingBottom={7}>
       <Outlet />

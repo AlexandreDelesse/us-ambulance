@@ -1,14 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { canReset, getDisplaySteps, updateTime } from "./Time.service";
+import { getDisplaySteps, updateTime } from "./Time.service";
 import useQueryPresenter from "../Utils/useQueryPresenter";
-import type { DisplayTimeQry, DisplayTimeStep, TimeCmd } from "./Time";
+import type { DisplayTimeQry, DisplayTimeStep } from "./Time";
 import StepProgress from "./StepProgress";
 import QueryComponent from "../Utils/QueryComponent";
 import type { AxiosError } from "axios";
 import { queryClient } from "../../queryClient";
 import { useState } from "react";
-import TimePickerModal from "./TimePickerModal";
 
 export default function StepProgressContainer() {
   const { jobId } = useParams();

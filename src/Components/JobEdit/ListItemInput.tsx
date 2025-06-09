@@ -25,7 +25,7 @@ export default function ListItemInput(props: ListItemInputProps) {
   };
 
   const deleteItem = (index: number) => {
-    const newValues = props.values.filter((v, i) => i !== index);
+    const newValues = props.values.filter((_v, i) => i !== index);
     props.onChange(JSON.stringify(newValues));
   };
 

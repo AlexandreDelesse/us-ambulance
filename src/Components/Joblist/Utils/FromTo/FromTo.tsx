@@ -1,5 +1,4 @@
 import { Box, Divider, Typography } from "@mui/material";
-import React from "react";
 import FlagIcon from "@mui/icons-material/Flag";
 import SportsScoreIcon from "@mui/icons-material/SportsScore";
 
