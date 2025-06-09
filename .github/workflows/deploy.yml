@@ -42,5 +42,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           script: |
-            cd /root/app/us-ambulance
+            cd /root/apps/us-ambulance
             ./redeploy.sh dev latest
