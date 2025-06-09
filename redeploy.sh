@@ -18,8 +18,8 @@ else
   IMAGE_TAG="v${VERSION}-${ENV}"
 fi
 
-IMAGE_NAME="alexandredelesse/usclient"
-CONTAINER_NAME="us-client-${ENV}"
+IMAGE_NAME="alexandredelesse/us-ambulance"
+CONTAINER_NAME="us-ambulance-${ENV}"
 
 # Définir le port en fonction de l'environnement
 case "$ENV" in
