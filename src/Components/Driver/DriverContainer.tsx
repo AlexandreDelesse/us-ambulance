@@ -31,7 +31,7 @@ export default function DriverContainer() {
     (data: DriverQry) => (
       <DisplayDriver
         driver={data.SelectedDriver}
-        vehicleModel={data.VehicleModel}
+        vehicleModel={data.VehicleModel ?? undefined}
         driverCollection={data.DriversCollection}
         onClick={handleOnClick}
         isLoading={mutation.isPending || query.isLoading}

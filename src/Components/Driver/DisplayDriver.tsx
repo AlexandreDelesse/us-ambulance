@@ -4,7 +4,7 @@ import type { Driver, VehicleModel } from "./Driver";
 
 interface DisplayDriverProps {
   driver: Driver;
-  vehicleModel: VehicleModel;
+  vehicleModel?: VehicleModel;
   driverCollection: Driver[];
   isLoading?: boolean;
   onClick: (driver: Driver, collection: Driver[]) => void;
@@ -21,7 +21,7 @@ export default function DisplayDriver(props: DisplayDriverProps) {
       startIcon={<DirectionsCarIcon />}
       fullWidth
     >
-      {props.vehicleModel.Immatriculation || ""} | {props.driver.DriverName}
+      {props.vehicleModel?.Immatriculation || ""} | {props.driver.DriverName}
     </Button>
   );
 }

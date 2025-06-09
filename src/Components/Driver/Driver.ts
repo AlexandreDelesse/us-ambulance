@@ -12,5 +12,5 @@ export interface DriverQry {
   DriversCollection: Driver[];
   SelectedDriver: Driver;
   ChangeDate: string;
-  VehicleModel: VehicleModel;
+  VehicleModel: VehicleModel | null;
 }

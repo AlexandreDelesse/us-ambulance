@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 // import ReactSignatureCanvas from "react-signature-canvas";
 import SignaturePad from "react-signature-pad-wrapper";
 import { Box, Button, Card } from "@mui/material";
 import { useParams } from "react-router";
-import { putSignature } from "./Signature.service";
+import { postSignature } from "./Signature.service";
 import type { Signature } from "./Signature";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 
@@ -17,7 +17,7 @@ export default function SignatureForm() {
 
   const mutation = useMutation({
     mutationKey: ["Signature"],
-    mutationFn: (signature: Signature) => putSignature(jobId!, signature),
+    mutationFn: (signature: Signature) => postSignature(jobId!, signature),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Signature"] }),
   });
 

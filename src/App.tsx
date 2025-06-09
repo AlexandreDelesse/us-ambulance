@@ -10,14 +10,14 @@ import JobPage from "./pages/JobPage";
 import MainPage from "./pages/MainPage";
 import MissionDetailPage from "./pages/MissionDetailPage";
 import SignaturePage from "./pages/SignaturePage";
-import JobEditFormContainer from "./Components/JobEdit/JobEditFormContainer";
 import JobEditPage from "./pages/JobEditPage";
+import KilometerPage from "./pages/KilometerPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <Box paddingTop={5}>
-        <Container sx={{ mt: 4, px: 0 }}>
+      <Box paddingTop={0}>
+        <Container sx={{ mt: 0, px: 0 }}>
           <Routes>
             <Route path="/" element={<MainPage />}>
               <Route path="/" element={<HomePage />}>
@@ -35,7 +35,9 @@ function App() {
                 <Route path="Signature" element={<SignaturePage />} />
               </Route>
 
-              <Route path="/*" element={<Page404 />} />
+              <Route path="Km" element={<KilometerPage />} />
+
+              <Route path="*" element={<Page404 />} />
             </Route>
           </Routes>
         </Container>

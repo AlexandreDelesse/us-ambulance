@@ -21,6 +21,8 @@ export default function MissionsPage() {
 
   const handleJobClick = (id: string) => navigate(id);
 
+  //TODO: Rajouter le filtre mission terminées
+
   const presenter: QueryPresenter<Job[]> = {
     presentSuccess: (jobs) => (
       <Joblist onClick={handleJobClick} joblist={jobs} />

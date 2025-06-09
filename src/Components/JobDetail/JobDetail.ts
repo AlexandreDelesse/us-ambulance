@@ -15,5 +15,5 @@ export interface Beneficiary {
   CompleteName: string;
   DDN: string | null;
   Age: string | null;
-  Phones: string[];
+  Phones: string[] | null;
 }

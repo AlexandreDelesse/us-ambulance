@@ -6,6 +6,6 @@ export const getSignature = async (jobId: string) => {
   return request.data;
 };
 
-export const putSignature = async (jobId: string, signature: Signature) => {
-  await client.patch("Signarure/" + jobId, signature);
+export const postSignature = async (jobId: string, signature: Signature) => {
+  await client.post("Signarure/" + jobId, signature);
 };
