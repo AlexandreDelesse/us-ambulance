@@ -43,4 +43,5 @@ jobs:
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           script: |
             cd /root/apps/us-ambulance
+            chmod +x redeploy.sh
             ./redeploy.sh dev latest
