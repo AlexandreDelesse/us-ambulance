@@ -25,7 +25,11 @@ if [[ ! -f "$ENV_FILE" ]]; then
 fi
 
 echo "🔐 Connexion au registre Docker..."
-docker login
+if [[ -n "$DOCKER_USERNAME" && -n "$DOCKER_PASSWORD" ]]; then
+  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+else
+  docker login
+fi
 
 echo "🔧 Construction de l'image Docker..."
 docker build \
