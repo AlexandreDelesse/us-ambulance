@@ -13,7 +13,7 @@ fi
 # Lire la version depuis package.json (ex : 1.2.3)
 VERSION=$(node -p "require('./package.json').version")
 
-IMAGE_NAME="alexandredelesse/usclient"
+IMAGE_NAME="alexandredelesse/us-ambulance"
 TAG_VERSION="v${VERSION}-${ENV}"
 TAG_LATEST="latest-${ENV}"
 
