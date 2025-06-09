@@ -10,6 +10,8 @@ import JobPage from "./pages/JobPage";
 import MainPage from "./pages/MainPage";
 import MissionDetailPage from "./pages/MissionDetailPage";
 import SignaturePage from "./pages/SignaturePage";
+import JobEditFormContainer from "./Components/JobEdit/JobEditFormContainer";
+import JobEditPage from "./pages/JobEditPage";
 
 function App() {
   return (
@@ -29,7 +31,7 @@ function App() {
               <Route path="Missions/:jobId" element={<JobPage />}>
                 <Route index element={<Navigate to="Detail" />} />
                 <Route path="Detail" element={<MissionDetailPage />} />
-                <Route path="EditDetail" element={<>Edit detail</>} />
+                <Route path="EditDetail" element={<JobEditPage />} />
                 <Route path="Signature" element={<SignaturePage />} />
               </Route>
 

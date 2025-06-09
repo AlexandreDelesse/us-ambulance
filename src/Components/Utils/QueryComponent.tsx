@@ -12,7 +12,7 @@ export default function QueryComponent<T>(
   query: UseQueryResult<T, AxiosError>,
   presenter: QueryPresenter<T>
 ) {
-  if (query.isLoading) return presenter.presentLoading();
+  if (query.isLoading || query.isRefetching) return presenter.presentLoading();
   if (query.isError) return presenter.presentError(query.error);
 
   if (!query.data) return <>Something went wrong</>;
