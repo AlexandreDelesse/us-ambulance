@@ -10,6 +10,7 @@ import LogoLoader from "../Components/Utils/LogoLoader";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router";
 import DriverContainer from "../Components/Driver/DriverContainer";
+import VersionDisplay from "../Components/Utils/VersionDisplay";
 
 export default function MissionsPage() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function MissionsPage() {
     <>
       <DriverContainer />
       {QueryComponent(query, presenter)}
+      <VersionDisplay />
     </>
   );
 }
