@@ -1,6 +1,7 @@
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import React, { type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { useUser } from "../User/UserContext";
 
 interface link {
   pathname: string;
@@ -16,8 +17,8 @@ export default function BottomNavbar(props: BottomNavbarProps) {
   const paths = location.pathname.split("/");
   const myPath = paths[paths.length - 1];
   const [value, setValue] = React.useState(myPath || "");
-
   const navigate = useNavigate();
+
   //FIXME: Les liens ne s'affichent pas en bleu au rechargement de la page
   return (
     <Box position="fixed" left={0} bottom={0} width="100%">
