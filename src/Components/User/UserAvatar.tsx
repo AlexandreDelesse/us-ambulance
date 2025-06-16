@@ -18,6 +18,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 export default function UserAvatar() {
   const { keycloak, initialized } = useKeycloak();
 
+  const redirectUri =
+    import.meta.env.KEYCLOAK_LOGOUT_URI || "https://dev.delesse.net";
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -95,7 +98,7 @@ export default function UserAvatar() {
           <MenuItem
             onClick={() =>
               keycloak.logout({
-                redirectUri: "https://dev.delesse.net/",
+                redirectUri,
               })
             }
           >

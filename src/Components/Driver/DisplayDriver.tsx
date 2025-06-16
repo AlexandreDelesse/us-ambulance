@@ -21,7 +21,7 @@ export default function DisplayDriver(props: DisplayDriverProps) {
       startIcon={<DirectionsCarIcon />}
       fullWidth
     >
-      {props.vehicleModel?.Immatriculation || ""} | {props.driver.DriverName}
+      {props.vehicleModel?.Immatriculation || ""} {props.driver.DriverName}
     </Button>
   );
 }

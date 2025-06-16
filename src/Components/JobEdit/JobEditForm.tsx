@@ -37,7 +37,6 @@ export default function JobEditForm(props: JobEditFormProps) {
   });
 
   const updateField = (field: FormField, value: string) => {
-    console.log(field.Name, value);
     const updatedFields = formData.map((f) =>
       f.Name === field.Name ? { ...f, Value: value } : f
     );
@@ -63,7 +62,6 @@ export default function JobEditForm(props: JobEditFormProps) {
         switch (field.Type) {
           case "Select":
             const fieldOptions = field.Options || {};
-            console.log("in case : ", field.Name, field.Value);
             return (
               <FormControl size="small" sx={{ width: "100%", my: 1 }}>
                 <InputLabel>{field.Label}</InputLabel>
@@ -85,7 +83,6 @@ export default function JobEditForm(props: JobEditFormProps) {
             );
           case "PhoneList":
             let phoneList = [];
-            console.log("field values", field.Value, field.Value?.length);
             if (field.Value) phoneList = JSON.parse(field.Value);
             return (
               <ListItemInput
@@ -99,7 +96,6 @@ export default function JobEditForm(props: JobEditFormProps) {
 
           case "MailList":
             let maillList = [];
-            console.log("field values", field.Value, field.Value?.length);
             if (field.Value) maillList = JSON.parse(field.Value);
             return (
               <ListItemInput

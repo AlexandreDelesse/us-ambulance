@@ -1,3 +1,5 @@
 export interface Signature {
-  data: string;
+  Data: string;
+  DateTime: string;
+  JobId: string;
 }

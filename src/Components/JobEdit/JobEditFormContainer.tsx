@@ -14,8 +14,6 @@ export default function JobEditFormContainer() {
     queryFn: () => getFormStructure(jobId!),
   });
 
-  console.log("isQuery loading : ", query.isLoading, query.isRefetching);
-
   const presenter = useQueryPresenter((formStructure: FormField[]) => (
     <JobEditForm formFields={formStructure} />
   ));

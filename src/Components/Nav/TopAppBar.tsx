@@ -5,11 +5,13 @@ import { useNavigate } from "react-router";
 
 export default function TopAppBar() {
   const navigate = useNavigate();
+
   return (
     <AppBar position="fixed">
       <Toolbar>
         <Avatar onClick={() => navigate("/")} src={logo} />
         {/* For separation */}
+
         <Box flex={1} />
         <UserAvatar />
       </Toolbar>

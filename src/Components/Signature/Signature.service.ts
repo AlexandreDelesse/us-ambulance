@@ -7,5 +7,5 @@ export const getSignature = async (jobId: string) => {
 };
 
 export const postSignature = async (jobId: string, signature: Signature) => {
-  await client.post("Signarure/" + jobId, signature);
+  await client.post("Signature/" + jobId, signature);
 };
