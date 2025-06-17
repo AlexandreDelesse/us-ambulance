@@ -1,23 +1,20 @@
 import QueryComponent, {
   type QueryPresenter,
 } from "../Components/Utils/QueryComponent";
-import { useQuery } from "@tanstack/react-query";
-import { getJoblist } from "../Components/Joblist/Joblist.service";
+import { useGetJoblist } from "../Components/Joblist/Joblist.service";
 import type { Job } from "../Components/Joblist/Job";
 import Joblist from "../Components/Joblist/Joblist";
 import ErrorHandler from "../Components/Utils/Error/ErrorHandler";
 import LogoLoader from "../Components/Utils/LogoLoader";
-import type { AxiosError } from "axios";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import DriverContainer from "../Components/Driver/DriverContainer";
 import VersionDisplay from "../Components/Utils/VersionDisplay";
+import { useCrew } from "../Components/Crew/CrewContext";
 
 export default function MissionsPage() {
   const navigate = useNavigate();
-  const query = useQuery<Job[], AxiosError>({
-    queryKey: ["Missions", 233149],
-    queryFn: () => getJoblist(233149),
-  });
+  const { crew } = useCrew();
+  const query = useGetJoblist(crew?.CrewId);
 
   const handleJobClick = (id: string) => navigate(id);
 
@@ -30,6 +27,8 @@ export default function MissionsPage() {
     presentError: (error) => <ErrorHandler error={error} />,
     presentLoading: () => <LogoLoader />,
   };
+
+  if (!crew) return <Navigate to={"/CrewList"} replace />;
 
   return (
     <>

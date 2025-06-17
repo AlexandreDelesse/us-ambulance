@@ -1,7 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import React, { type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { useUser } from "../User/UserContext";
 
 interface link {
   pathname: string;

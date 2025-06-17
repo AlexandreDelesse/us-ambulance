@@ -3,3 +3,7 @@ export interface Signature {
   DateTime: string;
   JobId: string;
 }
+
+export interface SignatureCmd {
+  Data: string;
+}

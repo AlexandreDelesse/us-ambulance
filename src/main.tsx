@@ -11,6 +11,7 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./Keycloak/Keycloak.ts";
 import LogoLoader from "./Components/Utils/LogoLoader.tsx";
 import { UserProvider } from "./Components/User/UserContext.tsx";
+import { CrewProvider } from "./Components/Crew/CrewContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
@@ -20,9 +21,11 @@ createRoot(document.getElementById("root")!).render(
     LoadingComponent={<LogoLoader LoadingText="Keycloak connection" />}
   >
     <UserProvider>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <CrewProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </CrewProvider>
     </UserProvider>
   </ReactKeycloakProvider>
   // </StrictMode>

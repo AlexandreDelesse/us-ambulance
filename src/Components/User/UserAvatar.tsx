@@ -14,6 +14,7 @@ import { useState } from "react";
 import { UserInitials } from "../Utils/Keycloak/UserInitials";
 import { deepOrange } from "@mui/material/colors";
 import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationSwitch from "../Notification/NotificationSwitch";
 
 export default function UserAvatar() {
   const { keycloak, initialized } = useKeycloak();
@@ -55,7 +56,7 @@ export default function UserAvatar() {
           // id="account-menu"
           open={open}
           onClose={handleClose}
-          onClick={handleClose}
+          onClick={() => {}}
           slotProps={{
             paper: {
               elevation: 0,
@@ -94,6 +95,9 @@ export default function UserAvatar() {
           </MenuItem>
 
           <Divider />
+          <MenuItem>
+            <NotificationSwitch />
+          </MenuItem>
 
           <MenuItem
             onClick={() =>

@@ -12,6 +12,7 @@ import MissionDetailPage from "./pages/MissionDetailPage";
 import SignaturePage from "./pages/SignaturePage";
 import JobEditPage from "./pages/JobEditPage";
 import KilometerPage from "./pages/KilometerPage";
+import CrewPage from "./pages/CrewPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                   <Route index element={<MissionsPage />} />
                 </Route>
                 <Route path="Vehicule" element={<VehiclePage />} />
+                <Route path="CrewList" element={<CrewPage />} />
               </Route>
 
               <Route path="Missions/:jobId" element={<JobPage />}>

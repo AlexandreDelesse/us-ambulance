@@ -7,11 +7,13 @@ import QueryComponent from "../Utils/QueryComponent";
 import type { AxiosError } from "axios";
 import { queryClient } from "../../queryClient";
 import { Button } from "@mui/material";
+import { useCrew } from "../Crew/CrewContext";
 
 export default function DriverContainer() {
+  const { crew } = useCrew();
   const query = useQuery<DriverQry, AxiosError>({
-    queryKey: ["Driver", 233415],
-    queryFn: () => getDriver(233415),
+    queryKey: ["Driver", crew?.CrewId],
+    queryFn: () => getDriver(crew?.CrewId || -1),
   });
 
   const mutation = useMutation({

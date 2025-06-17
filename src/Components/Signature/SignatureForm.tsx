@@ -6,7 +6,7 @@ import SignaturePad from "react-signature-pad-wrapper";
 import { Box, Button } from "@mui/material";
 import { useParams } from "react-router";
 import { postSignature } from "./Signature.service";
-import type { Signature } from "./Signature";
+import type { SignatureCmd } from "./Signature";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 
 export default function SignatureForm() {
@@ -17,14 +17,14 @@ export default function SignatureForm() {
 
   const mutation = useMutation({
     mutationKey: ["Signature"],
-    mutationFn: (signature: Signature) => postSignature(jobId!, signature),
+    mutationFn: (signature: SignatureCmd) => postSignature(jobId!, signature),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Signature"] }),
   });
 
   const saveSignature = () => {
     if (!signRef.current || signRef.current.isEmpty()) return;
     const dataUrl = signRef.current.toDataURL();
-    mutation.mutate({ data: dataUrl });
+    mutation.mutate({ Data: dataUrl });
   };
 
   const clearSignature = () => signRef.current?.clear();
