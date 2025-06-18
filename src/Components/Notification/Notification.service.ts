@@ -5,9 +5,11 @@ const VAPID_KEY =
 
 export function useNotifications() {
   const [hasSubscription, setHasSubscription] = useState(false);
+  const [notificationPermission, setNotificationPermission] = useState("");
 
   const subscribe = async () => {
     const permission = await requestNotificationPermission();
+    setNotificationPermission(permission);
     if (permission == "denied") return;
 
     const registration = await registerServiceWorker("sw.js");
@@ -16,6 +18,7 @@ export function useNotifications() {
 
     const subscription = await getSubscription(registration);
     if (!subscription) return;
+    console.log(subscription, subscription.toJSON());
 
     const apiSubscription = await postSubscription(subscription);
     if (!apiSubscription) return;
@@ -25,7 +28,12 @@ export function useNotifications() {
 
   const unSubscribe = () => setHasSubscription(false);
 
-  return { hasSubscription, subscribe, unSubscribe };
+  return {
+    hasSubscription,
+    permission: notificationPermission,
+    subscribe,
+    unSubscribe,
+  };
 }
 
 const requestNotificationPermission = async () => {
@@ -66,17 +74,13 @@ const getSubscription = async (registration: ServiceWorkerRegistration) => {
 };
 
 const postSubscription = async (subscription: PushSubscription) => {
-  console.log("Posting subscription");
-
   const apiSubscription = undefined;
   if (!apiSubscription)
     return await notificationClient.post(
-      "Notifications/subscribe",
+      "Subscription",
       {
-        id: -1,
         endpoint: subscription.endpoint,
         ...subscription.toJSON().keys,
-        userId: "27",
       },
       { headers: { "Content-Type": "application/json" } }
     );
