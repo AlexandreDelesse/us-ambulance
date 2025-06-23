@@ -12,6 +12,7 @@ import keycloak from "./Keycloak/Keycloak.ts";
 import LogoLoader from "./Components/Utils/LogoLoader.tsx";
 import { UserProvider } from "./Components/User/UserContext.tsx";
 import { CrewProvider } from "./Components/Crew/CrewContext.tsx";
+import { SnackbarProvider } from "notistack";
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
@@ -20,13 +21,17 @@ createRoot(document.getElementById("root")!).render(
     authClient={keycloak}
     LoadingComponent={<LogoLoader LoadingText="Keycloak connection" />}
   >
-    <UserProvider>
-      <CrewProvider>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </CrewProvider>
-    </UserProvider>
+    <SnackbarProvider
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      <UserProvider>
+        <CrewProvider>
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
+        </CrewProvider>
+      </UserProvider>
+    </SnackbarProvider>
   </ReactKeycloakProvider>
   // </StrictMode>
 );
