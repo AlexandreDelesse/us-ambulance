@@ -2,7 +2,7 @@ import axios from "axios";
 import keycloak from "../Keycloak/Keycloak";
 
 const BASE_URL = "https://intranet.urgencesante.fr:8090/api";
-const NOTIFICATION_BASE_URL = "http://85.214.12.96:5254/api/";
+const NOTIFICATION_BASE_URL = "https://notification-api.delesse.net/api/";
 
 const client = axios.create({
   baseURL: BASE_URL,
