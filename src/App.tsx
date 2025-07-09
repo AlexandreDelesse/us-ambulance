@@ -13,6 +13,7 @@ import SignaturePage from "./pages/SignaturePage";
 import JobEditPage from "./pages/JobEditPage";
 import KilometerPage from "./pages/KilometerPage";
 import CrewPage from "./pages/CrewPage";
+import WorkSessionPage from "./pages/WorkSessionPage";
 
 function App() {
   return (
@@ -21,14 +22,18 @@ function App() {
         <Container sx={{ mt: 0, px: 0 }}>
           <Routes>
             <Route path="/" element={<MainPage />}>
+              <Route index element={<WorkSessionPage />} />
+
               <Route path="/" element={<HomePage />}>
                 <Route index element={<Navigate to="Missions" />} />
                 <Route path="Missions">
                   <Route index element={<MissionsPage />} />
                 </Route>
+
                 <Route path="Vehicule" element={<VehiclePage />} />
-                <Route path="CrewList" element={<CrewPage />} />
               </Route>
+
+              <Route path="CrewList" element={<CrewPage />} />
 
               <Route path="Missions/:jobId" element={<JobPage />}>
                 <Route index element={<Navigate to="Detail" />} />

@@ -1,4 +1,10 @@
-import { Card, CardContent, CardHeader, type CardProps } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  type CardProps,
+} from "@mui/material";
 import { type ReactNode } from "react";
 
 interface SimpleCardProps extends CardProps {
@@ -12,7 +18,7 @@ export default function SimpleCard(props: SimpleCardProps) {
     <Card variant="outlined" sx={{ borderRadius: 0 }} {...otherprops}>
       <CardHeader
         sx={{ alignItems: "center" }}
-        title={props.title}
+        title={<Typography variant="h5" fontSize={18}>{props.title}</Typography>}
         action={action}
       />
       {/* <Divider /> */}

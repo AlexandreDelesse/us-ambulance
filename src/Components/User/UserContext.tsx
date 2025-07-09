@@ -6,6 +6,7 @@ interface User {
   mail?: string;
   roles?: string[];
   emailVerified?: boolean;
+  sub: string;
 }
 
 interface UserContextType {
@@ -31,6 +32,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           email: keycloak.tokenParsed.email,
           roles: keycloak.tokenParsed.realm_access?.roles || [],
           emailVerified: keycloak.tokenParsed.email_verified,
+          sub: keycloak.tokenParsed.sub || "",
         },
         isAuthenticated: true,
       };
