@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { HashRouter, Navigate, Route, Routes } from "react-router";
 import { Box, Container } from "@mui/material";
 import Page404 from "./pages/Page404";
 
@@ -14,15 +14,17 @@ import JobEditPage from "./pages/JobEditPage";
 import KilometerPage from "./pages/KilometerPage";
 import CrewPage from "./pages/CrewPage";
 import WorkSessionPage from "./pages/WorkSessionPage";
+import CommandePage from "./pages/CommandePage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Box paddingTop={0}>
         <Container sx={{ mt: 0, px: 0 }}>
           <Routes>
             <Route path="/" element={<MainPage />}>
               <Route index element={<WorkSessionPage />} />
+              <Route path="Commande" element={<CommandePage />} />
 
               <Route path="/" element={<HomePage />}>
                 <Route index element={<Navigate to="Missions" />} />
@@ -49,7 +51,7 @@ function App() {
           </Routes>
         </Container>
       </Box>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

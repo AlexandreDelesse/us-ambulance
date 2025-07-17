@@ -8,6 +8,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import { useKeycloak } from "@react-keycloak/web";
 import { useState } from "react";
@@ -15,9 +16,11 @@ import { UserInitials } from "../Utils/Keycloak/UserInitials";
 import { deepOrange } from "@mui/material/colors";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationSwitch from "../Notification/NotificationSwitch";
+import { useNavigate } from "react-router";
 
 export default function UserAvatar() {
   const { keycloak, initialized } = useKeycloak();
+  const navigate = useNavigate();
 
   const redirectUri =
     import.meta.env.KEYCLOAK_LOGOUT_URI || "https://dev.delesse.net";
@@ -97,6 +100,9 @@ export default function UserAvatar() {
           <Divider />
           <MenuItem>
             <NotificationSwitch />
+          </MenuItem>
+          <MenuItem onClick={() => navigate("Commande")}>
+            <Typography>Nouvelle commande</Typography>
           </MenuItem>
 
           <MenuItem
