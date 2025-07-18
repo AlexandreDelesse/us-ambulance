@@ -1,4 +1,10 @@
-import { FormControl, TextField, type TextFieldProps } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  Switch,
+  TextField,
+  type TextFieldProps,
+} from "@mui/material";
 import type { Address, PickupPlace } from "../Commande.model";
 import { useEffect, useState } from "react";
 import AddressForm from "./AddressForm";
@@ -23,10 +29,21 @@ export default function PickupPlaceForm(props: PickupPlaceFormProps) {
     props.value ?? defaultPickupPlace
   );
 
+  const [isDomicil, setIsDomicil] = useState(false);
+
   useEffect(() => props.onChange && props.onChange(pickupPlace));
 
   return (
     <FormControl fullWidth sx={{ gap: 1 }}>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isDomicil}
+            onChange={() => setIsDomicil(!isDomicil)}
+          />
+        }
+        label="Domicile"
+      />
       <TextField
         value={pickupPlace.timestamp}
         size={props.size}
@@ -37,6 +54,7 @@ export default function PickupPlaceForm(props: PickupPlaceFormProps) {
       />
 
       <AddressForm
+        isDomicil={isDomicil}
         size={props.size}
         value={pickupPlace.place}
         onChange={(value) =>

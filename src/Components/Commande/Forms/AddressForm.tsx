@@ -1,12 +1,14 @@
 import {
   FormControl,
-  MenuItem,
-  Select,
+  FormControlLabel,
+  Switch,
   TextField,
   type TextFieldProps,
 } from "@mui/material";
 import type { Address } from "../Commande.model";
 import { useEffect, useState } from "react";
+import CitySelect from "./CitySelect";
+import PickupPlaceSelect from "./PickupPlaceSelect";
 
 const defaultAdress: Address = {
   city: "",
@@ -14,11 +16,10 @@ const defaultAdress: Address = {
   label: "",
 };
 
-const cities = ["Toulon", "Hyères", "St Maximin", "La Seyne"];
-
 type AddressFormProps = {
   onChange?: (address: Address) => void;
   value?: Address;
+  isDomicil?: boolean;
 } & Omit<TextFieldProps, "value" | "onChange">;
 export default function AddressForm(props: AddressFormProps) {
   const [adress, setAdress] = useState(props.value ?? defaultAdress);
@@ -27,39 +28,41 @@ export default function AddressForm(props: AddressFormProps) {
 
   return (
     <FormControl fullWidth sx={{ gap: 1 }}>
-      <TextField
-        {...props}
-        label="Residence/Immeuble.."
-        placeholder="Residence/Immeuble.."
-        value={adress.label}
-        onChange={(e) =>
-          setAdress((old) => ({ ...old, label: e.target.value }))
-        }
-      />
+      {props.isDomicil && (
+        <TextField
+          {...props}
+          label="Residence/Immeuble.."
+          placeholder="Residence/Immeuble.."
+          value={adress.label}
+          onChange={(e) =>
+            setAdress((old) => ({ ...old, label: e.target.value }))
+          }
+        />
+      )}
 
-      <TextField
-        {...props}
-        label="Adresse complète"
-        placeholder="Adresse complète"
-        value={adress.completeAddress}
-        onChange={(e) =>
-          setAdress((old) => ({ ...old, completeAddress: e.target.value }))
-        }
-      />
+      {!props.isDomicil && (
+        <PickupPlaceSelect
+          label="Lieu de départ/arrivé"
+          size="small"
+          value={adress.completeAddress}
+          onChange={(e) =>
+            setAdress((old) => ({
+              ...old,
+              completeAddress: e.target.value as string,
+            }))
+          }
+        />
+      )}
 
-      <Select
-        size={props.size}
-        value={adress.city}
-        onChange={(e) => setAdress((old) => ({ ...old, city: e.target.value }))}
-        displayEmpty
-      >
-        <MenuItem value="">Ville</MenuItem>
-        {cities.map((city) => (
-          <MenuItem value={city} key={city}>
-            {city}
-          </MenuItem>
-        ))}
-      </Select>
+      {props.isDomicil && (
+        <CitySelect
+          value={adress.city}
+          onChange={(e) =>
+            setAdress((old) => ({ ...old, city: e.target.value as string }))
+          }
+          size="small"
+        />
+      )}
     </FormControl>
   );
 }

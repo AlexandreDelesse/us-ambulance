@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { TransportInfos } from "../Commande.model";
 import { FormControl, TextField, type TextFieldProps } from "@mui/material";
+import CitySelect from "./CitySelect";
+import TransportModeSelect from "./TransportModeSelect";
 
 const defaultTransportInfos: TransportInfos = {
   city: "",
@@ -28,12 +30,15 @@ export default function TransportInfosForm(props: TransportInfosFormProps) {
         gridTemplateColumns: "1fr 1fr",
       }}
     >
-      <TextField
+      <CitySelect
         value={transportInfos.city}
         label="Ville"
         size={props.size}
         onChange={(e) =>
-          setTransportInfos((old) => ({ ...old, city: e.target.value }))
+          setTransportInfos((old) => ({
+            ...old,
+            city: e.target.value as string,
+          }))
         }
       />
       <TextField
@@ -44,14 +49,15 @@ export default function TransportInfosForm(props: TransportInfosFormProps) {
           setTransportInfos((old) => ({ ...old, ref: e.target.value }))
         }
       />
-      <TextField
+
+      <TransportModeSelect
         value={transportInfos.transportMode}
         label="Mode de transport"
         size={props.size}
         onChange={(e) =>
           setTransportInfos((old) => ({
             ...old,
-            transportMode: e.target.value,
+            transportMode: e.target.value as string,
           }))
         }
       />
