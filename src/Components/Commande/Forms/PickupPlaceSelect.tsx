@@ -1,5 +1,4 @@
 import { FormControl, MenuItem, Select, type SelectProps } from "@mui/material";
-import React from "react";
 
 const pickUpPlaces = [
   "Hopital St Anne",

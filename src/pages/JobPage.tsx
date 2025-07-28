@@ -4,7 +4,6 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import InfoIcon from "@mui/icons-material/Info";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import { Outlet } from "react-router";
-import HomeButton from "../Components/Utils/Buttons/HomeButton";
 
 export default function JobPage() {
   const links = [

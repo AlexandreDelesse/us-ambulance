@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  type SelectProps,
-} from "@mui/material";
+import { FormControl, MenuItem, Select, type SelectProps } from "@mui/material";
 
 const cities = [
   "Toulon",

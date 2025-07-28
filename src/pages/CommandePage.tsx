@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Switch,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 
 import { useState } from "react";
 import TransportInfosForm from "../Components/Commande/Forms/TransportInfosForm";
@@ -34,7 +26,7 @@ export default function CommandePage() {
         <Typography marginTop={2} marginBottom={1}>
           Prise en charge
         </Typography>
-       
+
         <PickupPlaceForm size="small" />
 
         <Typography marginTop={2} marginBottom={1}>

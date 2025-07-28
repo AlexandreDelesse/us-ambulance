@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormControlLabel,
-  Switch,
-  TextField,
-  type TextFieldProps,
-} from "@mui/material";
+import { FormControl, TextField, type TextFieldProps } from "@mui/material";
 import type { Address } from "../Commande.model";
 import { useEffect, useState } from "react";
 import CitySelect from "./CitySelect";

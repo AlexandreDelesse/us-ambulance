@@ -28,11 +28,11 @@ export default function CrewListItem(props: CrewListItemProps) {
           <Box display={"flex"} justifyContent={"space-between"}>
             <Box>
               <Typography variant="caption">Membre 1</Typography>
-              <Typography color="steelblue">{props.crew.Member1}</Typography>
+              <Typography color="steelblue">{props.crew.Employee1}</Typography>
             </Box>
             <Box>
               <Typography variant="caption">Membre 2</Typography>
-              <Typography color="steelblue">{props.crew.Member2}</Typography>
+              <Typography color="steelblue">{props.crew.Employee2}</Typography>
             </Box>
           </Box>
           <Box>
