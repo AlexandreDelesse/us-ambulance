@@ -3,6 +3,7 @@ import ErrorHandler from "../Utils/Error/ErrorHandler";
 import LogoLoader from "../Utils/LogoLoader";
 import useWorkSession from "./useWorkSession.service";
 import WorkSessionView from "./WorkSessionView";
+import CrewLogin from "../CrewLogin/CrewLogin";
 
 export default function WorkSessionContainer() {
   const { query, mutation } = useWorkSession();
@@ -16,5 +17,10 @@ export default function WorkSessionContainer() {
     return <ErrorHandler custom404Render={custom404} error={query.error} />;
   if (!query.data) return <>No data</>;
 
-  return <WorkSessionView onAck={handleAck} workSession={query.data} />;
+  return (
+    <Box>
+      <WorkSessionView onAck={handleAck} workSession={query.data} />
+      <CrewLogin />
+    </Box>
+  );
 }

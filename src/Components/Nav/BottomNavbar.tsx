@@ -26,7 +26,7 @@ export default function BottomNavbar(props: BottomNavbarProps) {
         value={value}
         onChange={(_event, newValue) => {
           setValue(newValue);
-          navigate(newValue);
+          navigate(newValue, { replace: true });
         }}
       >
         {props.links.map((link) => (

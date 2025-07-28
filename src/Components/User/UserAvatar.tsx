@@ -13,7 +13,7 @@ import {
 import { useKeycloak } from "@react-keycloak/web";
 import { useState } from "react";
 import { UserInitials } from "../Utils/Keycloak/UserInitials";
-import { deepOrange } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationSwitch from "../Notification/NotificationSwitch";
 import { useNavigate } from "react-router";
@@ -36,6 +36,8 @@ export default function UserAvatar() {
     setAnchorEl(null);
   };
 
+  console.log(keycloak.tokenParsed)
+
   if (initialized && keycloak.authenticated)
     return (
       <>
@@ -46,8 +48,10 @@ export default function UserAvatar() {
                 width: 24,
                 height: 24,
                 padding: 1,
-                bgcolor: deepOrange[500],
+                bgcolor: "whitesmoke",
                 fontSize: 18,
+                color: blue[600],
+                fontWeight: "500"
               }}
             >
               {keycloak.tokenParsed ? UserInitials(keycloak.tokenParsed) : "?"}
@@ -113,7 +117,7 @@ export default function UserAvatar() {
             }
           >
             <ListItemIcon>
-              <LogoutIcon fontSize="small" />
+              <LogoutIcon color="error" fontSize="small" />
             </ListItemIcon>
             Logout
           </MenuItem>

@@ -27,7 +27,6 @@ export default function JobPage() {
 
   return (
     <Box height="100%" paddingBottom={7}>
-      <HomeButton />
       <Outlet />
       <BottomNavbar links={links} />
     </Box>
