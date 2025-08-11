@@ -4,3 +4,10 @@ export interface WorkSession {
   EmployeeId: number;
   WorkSessionId: number;
 }
+
+export interface WorkSessionPutCmd {
+  EmployeeId: number;
+  StartTime: string;
+  EndTime: string | null;
+  AckTime: string | null;
+}

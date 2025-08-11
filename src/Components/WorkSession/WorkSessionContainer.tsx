@@ -3,11 +3,20 @@ import ErrorHandler from "../Utils/Error/ErrorHandler";
 import LogoLoader from "../Utils/LogoLoader";
 import useWorkSession from "./useWorkSession.service";
 import WorkSessionView from "./WorkSessionView";
+import type { WorkSession, WorkSessionPutCmd } from "./WorkSession.model";
 
 export default function WorkSessionContainer() {
   const { query, mutation } = useWorkSession();
 
-  const handleAck = (id: string) => mutation.mutate(id);
+  const handleAck = (ws: WorkSession) => {
+    let cmd: WorkSessionPutCmd = {
+      AckTime: new Date().toISOString(),
+      EmployeeId: ws.EmployeeId,
+      EndTime: ws.EndTime,
+      StartTime: ws.StartTime,
+    };
+    mutation.mutate({ id: ws.WorkSessionId, ws: cmd });
+  };
 
   const custom404 = (
     <Box textAlign={"center"} my={2}>

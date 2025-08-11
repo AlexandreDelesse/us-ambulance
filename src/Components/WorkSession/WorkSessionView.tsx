@@ -1,9 +1,9 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import type { WorkSession } from "./WorkSession.model";
 
 interface WorkSessionViewProps {
   workSession: WorkSession;
-  onAck: (id: string) => void;
+  onAck: (ws: WorkSession) => void;
 }
 export default function WorkSessionView(props: WorkSessionViewProps) {
   return (
@@ -23,7 +23,12 @@ export default function WorkSessionView(props: WorkSessionViewProps) {
         ))}
       </SimpleCard> */}
 
-      {/* <Button onClick={() => props.onAck(props.workSession)}>Valider</Button> */}
+      <Button
+        sx={{ textAlign: "center" }}
+        onClick={() => props.onAck(props.workSession)}
+      >
+        Valider
+      </Button>
     </Stack>
   );
 }

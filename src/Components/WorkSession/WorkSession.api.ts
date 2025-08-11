@@ -1,4 +1,5 @@
 import { notificationClient, regulApi } from "../../api/client";
+import type { WorkSessionPutCmd } from "./WorkSession.model";
 // import type { WorkSession } from "./WorkSession.model";
 
 // const mockWorkSession: WorkSession = {
@@ -12,11 +13,11 @@ export const getWorkSession = async (userId: string) => {
   // return mockWorkSession;
 };
 
-export const ackWorkSession = async (userId: string, sessionId: string) => {
+export const ackWorkSession = async (
+  workSessionId: number,
+  workSession: WorkSessionPutCmd
+) => {
   return (
-    await notificationClient.post(
-      "Employee/" + userId + "/KorkSession/" + sessionId,
-      JSON.stringify("Acknoledged")
-    )
+    await notificationClient.post("KorkSession/" + workSessionId, workSession)
   ).data;
 };

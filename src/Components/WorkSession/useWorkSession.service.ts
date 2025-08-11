@@ -3,7 +3,7 @@ import { ackWorkSession, getWorkSession } from "./WorkSession.api";
 import { queryClient } from "../../queryClient";
 import useNotifSnack from "../Utils/useNotifSnack";
 import { useUser } from "../User/UserContext";
-import type { WorkSession } from "./WorkSession.model";
+import type { WorkSession, WorkSessionPutCmd } from "./WorkSession.model";
 import type { AxiosError } from "axios";
 
 export default function useWorkSession() {
@@ -18,11 +18,10 @@ export default function useWorkSession() {
   //TODO: A finir
   const mutation = useMutation({
     mutationKey: ["worksession"],
-    mutationFn: (id: string) => ackWorkSession(id, id),
-    onSuccess: (data) => {
-      // queryClient.invalidateQueries({ queryKey: ["worksession"] });
-      console.log(data);
-      queryClient.setQueryData(["worksession"], data);
+    mutationFn: (ws: { id: number; ws: WorkSessionPutCmd }) =>
+      ackWorkSession(ws.id, ws.ws),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["worksession"] });
       notifySuccess("Ok");
     },
   });
