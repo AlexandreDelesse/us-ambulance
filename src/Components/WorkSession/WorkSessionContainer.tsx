@@ -3,14 +3,17 @@ import ErrorHandler from "../Utils/Error/ErrorHandler";
 import LogoLoader from "../Utils/LogoLoader";
 import useWorkSession from "./useWorkSession.service";
 import WorkSessionView from "./WorkSessionView";
-import CrewLogin from "../CrewLogin/CrewLogin";
 
 export default function WorkSessionContainer() {
   const { query, mutation } = useWorkSession();
 
   const handleAck = (id: string) => mutation.mutate(id);
 
-  const custom404 = <Box>Aucun service prevue</Box>;
+  const custom404 = (
+    <Box textAlign={"center"} my={2}>
+      Aucun service prevue
+    </Box>
+  );
 
   if (query.isLoading) return <LogoLoader />;
   if (query.isError)
@@ -20,7 +23,6 @@ export default function WorkSessionContainer() {
   return (
     <Box>
       <WorkSessionView onAck={handleAck} workSession={query.data} />
-      <CrewLogin />
     </Box>
   );
 }

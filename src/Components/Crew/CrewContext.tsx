@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { Crew } from "./Crew.model";
+import { getLocalCrew } from "./Crew.api";
 
 interface CrewContextType {
   crew?: Crew;
@@ -15,9 +16,13 @@ const CrewContext = createContext<CrewContextType>({
 export const useCrew = () => useContext(CrewContext);
 
 export const CrewProvider = ({ children }: { children: React.ReactNode }) => {
-  const [crew, setCrew] = useState<Crew>();
+  const [crew, setCrew] = useState<Crew | undefined>(getLocalCrew());
+  
 
-  const resetCrew = () => setCrew(undefined);
+  const resetCrew = () => {
+
+    setCrew(undefined);
+  };
 
   return (
     <CrewContext.Provider value={{ crew, setCrew, resetCrew }}>

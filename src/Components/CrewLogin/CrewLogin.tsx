@@ -1,7 +1,6 @@
 import { Button, FormGroup, TextField } from "@mui/material";
 import { useState } from "react";
 import { useCrew } from "../Crew/CrewContext";
-import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { PostLogin } from "./Login.service";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
@@ -12,7 +11,7 @@ export default function CrewLogin() {
     name: crew?.Employee1 ?? crew?.Employee2 ?? "",
     crewId: crew?.CrewId.toString() || "",
   });
-  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationKey: ["login"],
     mutationFn: (params: { name: string; crewId: number }) => PostLogin(params),
@@ -33,7 +32,6 @@ export default function CrewLogin() {
       crewId: parseInt(value.crewId),
     });
     setCrew(crew);
-    navigate("Missions");
   };
 
   return (
