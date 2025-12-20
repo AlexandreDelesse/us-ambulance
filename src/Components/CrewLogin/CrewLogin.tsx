@@ -16,7 +16,6 @@ export default function CrewLogin() {
     mutationKey: ["login"],
     mutationFn: (params: { name: string; crewId: number }) => PostLogin(params),
   });
-  console.log(crew);
 
   //   if (crew)
   //     return (

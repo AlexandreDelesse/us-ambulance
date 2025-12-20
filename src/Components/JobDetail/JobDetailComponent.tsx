@@ -12,12 +12,12 @@ interface JobDetailComponentProps {
 export default function JobDetailComponent(props: JobDetailComponentProps) {
   const hasComment = !!props.jobDetail.Comments;
   return (
-    <Box sx={{ marginBottom: 5 }}>
+    <Box sx={{ marginBottom: 5, padding: 1 }}>
       {/* <EditableBeneficiary beneficiary={jobDetail.beneficiary} /> */}
       <BeneficiaryInfos beneficiary={props.jobDetail.Beneficiary} />
 
       <StepProgressContainer />
-      
+
       <TransportInfos
         schedule={props.jobDetail.Schedule}
         transportMode={props.jobDetail.TransportMode}

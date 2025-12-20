@@ -7,16 +7,23 @@ import { getMecanicLogs } from "../Components/MecanicLog/MecanicLog.service";
 import type { AxiosError } from "axios";
 import { Box } from "@mui/material";
 import MecanicLogForm from "../Components/MecanicLog/MecanicLogForm";
+import { useCrew } from "../Components/Crew/CrewContext";
+import CrewLogin from "../Components/CrewLogin/CrewLogin";
 
 export default function VehiclePage() {
+  const { crew } = useCrew();
+
   const presenter = useQueryPresenter<DisplayMecanicLog[]>(
     (data: DisplayMecanicLog[]) => <MecanicLogList mecanicLogList={data} />
   );
 
   const query = useQuery<DisplayMecanicLog[], AxiosError>({
-    queryKey: ["MesanicLogs", 233149],
-    queryFn: () => getMecanicLogs(233149),
+    queryKey: ["MesanicLogs", crew?.CrewId],
+    queryFn: () => getMecanicLogs(crew?.CrewId ?? -1),
   });
+
+  if (!crew) return <CrewLogin />;
+
   return (
     <Box display={"flex"} gap={2} flexDirection={"column"}>
       <MecanicLogForm />

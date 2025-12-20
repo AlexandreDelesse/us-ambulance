@@ -17,9 +17,11 @@ import { blue } from "@mui/material/colors";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationSwitch from "../Notification/NotificationSwitch";
 import { useNavigate } from "react-router";
+import { useUser } from "./UserContext";
 
 export default function UserAvatar() {
   const { keycloak, initialized } = useKeycloak();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const redirectUri =
@@ -36,7 +38,7 @@ export default function UserAvatar() {
     setAnchorEl(null);
   };
 
-  console.log(keycloak.tokenParsed)
+  console.log(keycloak.tokenParsed);
 
   if (initialized && keycloak.authenticated)
     return (
@@ -51,7 +53,7 @@ export default function UserAvatar() {
                 bgcolor: "whitesmoke",
                 fontSize: 18,
                 color: blue[600],
-                fontWeight: "500"
+                fontWeight: "500",
               }}
             >
               {keycloak.tokenParsed ? UserInitials(keycloak.tokenParsed) : "?"}
@@ -102,12 +104,16 @@ export default function UserAvatar() {
           </MenuItem>
 
           <Divider />
-          <MenuItem>
-            <NotificationSwitch />
-          </MenuItem>
-          <MenuItem onClick={() => navigate("Commande")}>
-            <Typography>Nouvelle commande</Typography>
-          </MenuItem>
+          {user?.isAdmin && (
+            <>
+              <MenuItem>
+                <NotificationSwitch />
+              </MenuItem>
+              <MenuItem onClick={() => navigate("Commande")}>
+                <Typography>Nouvelle commande</Typography>
+              </MenuItem>
+            </>
+          )}
 
           <MenuItem
             onClick={() =>

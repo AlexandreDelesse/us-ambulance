@@ -1,12 +1,15 @@
 import { useKeycloak } from "@react-keycloak/web";
-import { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 
-interface User {
+// --- Types
+export interface User {
   username: string;
-  mail?: string;
-  roles?: string[];
+  email?: string;
+  roles: string[];
   emailVerified?: boolean;
   sub: string;
+  name: string;
+  isAdmin: boolean;
 }
 
 interface UserContextType {
@@ -14,34 +17,47 @@ interface UserContextType {
   isAuthenticated: boolean;
 }
 
+// --- Contexte
 const UserContext = createContext<UserContextType>({
   user: null,
   isAuthenticated: false,
 });
 
+// --- Hook d’accès
 export const useUser = () => useContext(UserContext);
 
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+// --- Provider
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { keycloak } = useKeycloak();
 
-  const value = useMemo(() => {
-    if (keycloak.authenticated && keycloak.tokenParsed) {
-      return {
-        user: {
-          username: keycloak.tokenParsed.preferred_username || "",
-          email: keycloak.tokenParsed.email,
-          roles: keycloak.tokenParsed.realm_access?.roles || [],
-          emailVerified: keycloak.tokenParsed.email_verified,
-          sub: keycloak.tokenParsed.sub || "",
-        },
-        isAuthenticated: true,
-      };
-    }
-    return {
-      user: null,
-      isAuthenticated: false,
-    };
-  }, [keycloak]);
+  const userContextValue: UserContextType = useMemo(() => {
+    const isAuthenticated = keycloak.authenticated ?? false;
+    const token = keycloak.tokenParsed;
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+    if (!isAuthenticated || !token) {
+      return { user: null, isAuthenticated: false };
+    }
+
+    const userRoles = token.realm_access?.roles ?? [];
+
+    const user: User = {
+      username: token.preferred_username || "",
+      email: token.email,
+      roles: userRoles,
+      emailVerified: token.email_verified,
+      sub: token.sub || "",
+      name: token.name || "",
+      isAdmin: userRoles.includes("admin"),
+    };
+
+    return { user, isAuthenticated: true };
+  }, [keycloak.authenticated, keycloak.tokenParsed]);
+
+  return (
+    <UserContext.Provider value={userContextValue}>
+      {children}
+    </UserContext.Provider>
+  );
 };
