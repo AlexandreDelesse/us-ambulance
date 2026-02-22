@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { notificationClient } from "../../api/client";
 import { enqueueSnackbar, useSnackbar } from "notistack";
+import { useUser } from "../User/UserContext";
+import { getDeviceInfos } from "../Utils/DeviceInfos/UserAgentTools";
 const VAPID_KEY =
   "BA2Rtaj-6HC9Vy2w88_DnDDv0veeC-6EL-KDFkOt9UwU8BKW-sVU_but7kzf2OperPTHXcyWaoGHJsBnws5LVFI";
 
@@ -9,6 +11,7 @@ export function useNotifications() {
   const [notificationPermission, setNotificationPermission] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useUser();
 
   const subscribe = async () => {
     setIsLoading(true);
@@ -24,7 +27,18 @@ export function useNotifications() {
     if (!subscription) return setIsLoading(false);
     console.log(subscription, subscription.toJSON());
 
-    const apiSubscription = await postSubscription(subscription);
+    const deviceInfos = getDeviceInfos();
+    const jsonSub = subscription.toJSON();
+    const payload: PostSubscriptionDTO = {
+      endpoint: subscription.endpoint,
+      auth: jsonSub.keys?.auth ?? "",
+      p256dh: jsonSub.keys?.p256dh ?? "",
+      userId: user!.sub,
+      osName: deviceInfos.os.name || "No OS",
+      navigatorName: deviceInfos.browser.name || "No Browser",
+      osVersion: deviceInfos.os.version || "No Os Version",
+    };
+    const apiSubscription = await postSubscription(payload); //pas beau
     if (!apiSubscription) return setIsLoading(false);
     setIsLoading(false);
     enqueueSnackbar("Well done", { variant: "success" });
@@ -81,16 +95,20 @@ const getSubscription = async (registration: ServiceWorkerRegistration) => {
   return subscription;
 };
 
-const postSubscription = async (subscription: PushSubscription) => {
+export interface PostSubscriptionDTO {
+  userId: string;
+  endpoint: string;
+  auth: string;
+  p256dh: string;
+  navigatorName: string;
+  osName: string;
+  osVersion: string;
+}
+const postSubscription = async (payload: PostSubscriptionDTO) => {
   const apiSubscription = undefined;
   if (!apiSubscription)
-    return await notificationClient.post(
-      "Subscription",
-      {
-        endpoint: subscription.endpoint,
-        ...subscription.toJSON().keys,
-      },
-      { headers: { "Content-Type": "application/json" } }
-    );
+    return await notificationClient.post("Subscription", payload, {
+      headers: { "Content-Type": "application/json" },
+    });
   else return apiSubscription;
 };
