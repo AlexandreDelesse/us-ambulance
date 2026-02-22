@@ -1,4 +1,4 @@
-import { notificationClient, regulApi } from "../../api/client";
+import { notificationClient } from "../../api/client";
 import type { WorkSessionPutCmd } from "./WorkSession.model";
 import type { WorkSession } from "./WorkSession.model";
 
@@ -8,7 +8,7 @@ const mockWorkSession: WorkSession = {
   StartTime: new Date().toISOString(),
   WorkSessionId: 32234,
 };
-export const getWorkSession = async (userId: string) => {
+export const getWorkSession = async (_userId: string) => {
   // return (await regulApi.get("Employee/" + userId + "WorkSession")).data;
   return mockWorkSession;
 };
