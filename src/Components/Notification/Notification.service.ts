@@ -73,7 +73,11 @@ export function useNotifications() {
       const subscription = await registration?.pushManager.getSubscription();
       if (subscription) {
         await subscription.unsubscribe();
-        await deleteSubscription(subscription.endpoint);
+        try {
+          await deleteSubscription(subscription.endpoint);
+        } catch {
+          // API pas encore disponible — la désinscription navigateur est effective
+        }
       }
       await refreshNotificationStatus();
       enqueueSnackbar("Notifications désactivées", { variant: "info" });
