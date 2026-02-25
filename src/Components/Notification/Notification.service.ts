@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { notificationClient } from "../../api/client";
 import { enqueueSnackbar, useSnackbar } from "notistack";
 import { useUser } from "../User/UserContext";
@@ -9,9 +9,39 @@ const VAPID_KEY =
 export function useNotifications() {
   const [hasSubscription, setHasSubscription] = useState(false);
   const [notificationPermission, setNotificationPermission] = useState("");
+  const [notificatioNStatus, setNotificationStatus] = useState(false);
+  const [isNotifStateLoading, setIsNotifStateLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useUser();
+
+  useEffect(() => {
+    updateNotificationStatus();
+  }, []);
+
+  const updateNotificationStatus = async () => {
+    const status = await getkNotificationStatus();
+    setNotificationStatus(status);
+  };
+
+  const getkNotificationStatus = async () => {
+    console.log("--- Début du check ---");
+    setIsNotifStateLoading(true);
+    const permission = Notification.permission;
+    console.log("Permission : ", permission);
+    if (permission != "granted") return false;
+
+    const registration = await navigator.serviceWorker.ready;
+    console.log(registration);
+    if (!registration) return false;
+
+    const sub = await registration.pushManager.getSubscription();
+    console.log(sub);
+    if (!sub) return false;
+    console.log("--- Fin du check ---");
+    setIsNotifStateLoading(false);
+    return true;
+  };
 
   const subscribe = async () => {
     setIsLoading(true);
@@ -53,6 +83,8 @@ export function useNotifications() {
     subscribe,
     unSubscribe,
     isLoading,
+    notificatioNStatus,
+    isNotifStateLoading,
   };
 }
 
