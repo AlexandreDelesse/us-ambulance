@@ -1,130 +1,130 @@
 import { useEffect, useState } from "react";
 import { notificationClient } from "../../api/client";
-import { enqueueSnackbar, useSnackbar } from "notistack";
+import { enqueueSnackbar } from "notistack";
 import { useUser } from "../User/UserContext";
 import { getDeviceInfos } from "../Utils/DeviceInfos/UserAgentTools";
-const VAPID_KEY =
-  "BA2Rtaj-6HC9Vy2w88_DnDDv0veeC-6EL-KDFkOt9UwU8BKW-sVU_but7kzf2OperPTHXcyWaoGHJsBnws5LVFI";
+
+const VAPID_KEY = import.meta.env.VITE_VAPID_KEY;
 
 export function useNotifications() {
-  const [hasSubscription, setHasSubscription] = useState(false);
-  const [notificationPermission, setNotificationPermission] = useState("");
-  const [notificatioNStatus, setNotificationStatus] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState(false);
   const [isNotifStateLoading, setIsNotifStateLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
   const { user } = useUser();
 
   useEffect(() => {
-    updateNotificationStatus();
+    refreshNotificationStatus();
   }, []);
 
-  const updateNotificationStatus = async () => {
-    const status = await getkNotificationStatus();
+  const refreshNotificationStatus = async () => {
+    const status = await getNotificationStatus();
     setNotificationStatus(status);
   };
 
-  const getkNotificationStatus = async () => {
-    console.log("--- Début du check ---");
+  const getNotificationStatus = async (): Promise<boolean> => {
     setIsNotifStateLoading(true);
-    const permission = Notification.permission;
-    console.log("Permission : ", permission);
-    if (permission != "granted") return false;
-
-    const registration = await navigator.serviceWorker.ready;
-    console.log(registration);
-    if (!registration) return false;
-
-    const sub = await registration.pushManager.getSubscription();
-    console.log(sub);
-    if (!sub) return false;
-    console.log("--- Fin du check ---");
-    setIsNotifStateLoading(false);
-    return true;
+    try {
+      if (Notification.permission !== "granted") return false;
+      const registration = await navigator.serviceWorker.ready;
+      if (!registration) return false;
+      const sub = await registration.pushManager.getSubscription();
+      return !!sub;
+    } finally {
+      setIsNotifStateLoading(false);
+    }
   };
 
   const subscribe = async () => {
     setIsLoading(true);
-    const permission = await requestNotificationPermission();
-    setNotificationPermission(permission);
-    if (permission == "denied") return setIsLoading(false);
+    try {
+      const permission = await requestNotificationPermission();
+      if (permission !== "granted") return;
 
-    const registration = await registerServiceWorker("sw.js");
-    console.log(registration);
-    if (!registration) return setIsLoading(false);
+      const registration = await registerServiceWorker("sw.js");
+      if (!registration) return;
 
-    const subscription = await getSubscription(registration);
-    if (!subscription) return setIsLoading(false);
-    console.log(subscription, subscription.toJSON());
+      const subscription = await getOrCreateSubscription(registration);
+      if (!subscription) return;
 
-    const deviceInfos = getDeviceInfos();
-    const jsonSub = subscription.toJSON();
-    const payload: PostSubscriptionDTO = {
-      endpoint: subscription.endpoint,
-      auth: jsonSub.keys?.auth ?? "",
-      p256dh: jsonSub.keys?.p256dh ?? "",
-      userId: user!.sub,
-      osName: deviceInfos.os.name || "No OS",
-      navigatorName: deviceInfos.browser.name || "No Browser",
-      osVersion: deviceInfos.os.version || "No Os Version",
-    };
-    const apiSubscription = await postSubscription(payload); //pas beau
-    if (!apiSubscription) return setIsLoading(false);
-    setIsLoading(false);
-    enqueueSnackbar("Well done", { variant: "success" });
-    return setHasSubscription(true);
+      const deviceInfos = getDeviceInfos();
+      const jsonSub = subscription.toJSON();
+      const payload: PostSubscriptionDTO = {
+        endpoint: subscription.endpoint,
+        auth: jsonSub.keys?.auth ?? "",
+        p256dh: jsonSub.keys?.p256dh ?? "",
+        userId: user!.sub,
+        osName: deviceInfos.os.name || "No OS",
+        navigatorName: deviceInfos.browser.name || "No Browser",
+        osVersion: deviceInfos.os.version || "No Os Version",
+      };
+
+      await postSubscription(payload);
+      await refreshNotificationStatus();
+      enqueueSnackbar("Notifications activées", { variant: "success" });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const unSubscribe = () => setHasSubscription(false);
+  const unSubscribe = async () => {
+    setIsLoading(true);
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration?.pushManager.getSubscription();
+      if (subscription) {
+        await subscription.unsubscribe();
+        await deleteSubscription(subscription.endpoint);
+      }
+      await refreshNotificationStatus();
+      enqueueSnackbar("Notifications désactivées", { variant: "info" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return {
-    hasSubscription,
-    permission: notificationPermission,
+    notificationStatus,
     subscribe,
     unSubscribe,
     isLoading,
-    notificatioNStatus,
     isNotifStateLoading,
   };
 }
 
-const requestNotificationPermission = async () => {
-  console.log("Requesting notification permission");
-
-  if ("Notification" in window) {
-    const permission = Notification.permission;
-    if (permission === "granted" || permission == "denied") return permission;
-    return await Notification.requestPermission();
-  } else {
-    enqueueSnackbar("no notification", { variant: "warning" });
+const requestNotificationPermission = async (): Promise<
+  NotificationPermission | "Error"
+> => {
+  if (!("Notification" in window)) {
+    enqueueSnackbar("Les notifications ne sont pas supportées", {
+      variant: "warning",
+    });
     return "Error";
   }
+  const { permission } = Notification;
+  if (permission === "granted" || permission === "denied") return permission;
+  return await Notification.requestPermission();
 };
 
-const registerServiceWorker = async (swUrl: string) => {
-  console.log("Registrating service worker if don't exist : ", swUrl);
-
-  let registration;
-  if ("serviceWorker" in navigator) {
-    registration = await navigator.serviceWorker.getRegistration(swUrl);
-    console.log("registration from service worker : ", registration);
-    if (!registration) return await navigator.serviceWorker.register(swUrl);
-    else return registration;
-  } else {
-    enqueueSnackbar("no service worker", { variant: "warning" });
+const registerServiceWorker = async (
+  swUrl: string
+): Promise<ServiceWorkerRegistration | undefined> => {
+  if (!("serviceWorker" in navigator)) {
+    enqueueSnackbar("Service Worker non supporté", { variant: "warning" });
     return undefined;
   }
+  const existing = await navigator.serviceWorker.getRegistration(swUrl);
+  return existing ?? (await navigator.serviceWorker.register(swUrl));
 };
 
-const getSubscription = async (registration: ServiceWorkerRegistration) => {
-  console.log("Getting subscription");
-  let subscription = await registration.pushManager.getSubscription();
-  if (!subscription)
-    subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: VAPID_KEY,
-    });
-  return subscription;
+const getOrCreateSubscription = async (
+  registration: ServiceWorkerRegistration
+): Promise<PushSubscription | null> => {
+  const existing = await registration.pushManager.getSubscription();
+  if (existing) return existing;
+  return await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: VAPID_KEY,
+  });
 };
 
 export interface PostSubscriptionDTO {
@@ -136,11 +136,11 @@ export interface PostSubscriptionDTO {
   osName: string;
   osVersion: string;
 }
+
 const postSubscription = async (payload: PostSubscriptionDTO) => {
-  const apiSubscription = undefined;
-  if (!apiSubscription)
-    return await notificationClient.post("Subscription", payload, {
-      headers: { "Content-Type": "application/json" },
-    });
-  else return apiSubscription;
+  return notificationClient.post("Subscription", payload);
+};
+
+const deleteSubscription = async (endpoint: string) => {
+  return notificationClient.delete("Subscription", { data: { endpoint } });
 };

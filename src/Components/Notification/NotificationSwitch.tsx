@@ -2,10 +2,11 @@ import { Box, Switch, Typography } from "@mui/material";
 import { useNotifications } from "./Notification.service";
 
 export default function NotificationSwitch() {
-  const { hasSubscription, subscribe, unSubscribe, isLoading, notificatioNStatus, isNotifStateLoading } =
+  const { notificationStatus, subscribe, unSubscribe, isLoading, isNotifStateLoading } =
     useNotifications();
+
   const handleSwitchClick = () =>
-    hasSubscription ? unSubscribe() : subscribe();
+    notificationStatus ? unSubscribe() : subscribe();
 
   return (
     <Box display={"flex"} alignItems={"center"} gap={1}>
@@ -13,7 +14,7 @@ export default function NotificationSwitch() {
       <Switch
         disabled={isLoading || isNotifStateLoading}
         onClick={handleSwitchClick}
-        checked={notificatioNStatus}
+        checked={notificationStatus}
       />
     </Box>
   );

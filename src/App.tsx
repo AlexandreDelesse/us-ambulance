@@ -1,6 +1,6 @@
 import "./App.css";
 import { HashRouter, Navigate, Route, Routes } from "react-router";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Page404 from "./pages/Page404";
 import HomePage from "./pages/HomePage";
 import MissionsPage from "./pages/MissionsPage";
@@ -17,9 +17,8 @@ import WorkSessionPage from "./pages/WorkSessionPage";
 function App() {
   return (
     <HashRouter>
-      <Box paddingTop={0}>
-        <Container sx={{ mt: 0, px: 0 }}>
-          <Routes>
+      <Container sx={{ mt: 0, px: 0 }}>
+        <Routes>
             <Route path="/" element={<MainPage />}>
               <Route element={<HomePage />}>
                 <Route index element={<WorkSessionPage />} />
@@ -28,14 +27,6 @@ function App() {
               </Route>
 
               <Route path="Commande" element={<CommandePage />} />
-              {/* <Route path="CrewList" element={<CrewPage />} /> */}
-
-              {/* <Route path="/" element={<HomePage />}>
-                <Route index element={<Navigate to="Missions" />} />
-                <Route path="Missions">
-                  <Route index element={<MissionsPage />} />
-                </Route>
-              </Route> */}
 
               <Route path="Missions/:jobId" element={<JobPage />}>
                 <Route index element={<Navigate to="Detail" />} />
@@ -48,9 +39,8 @@ function App() {
 
               <Route path="*" element={<Page404 />} />
             </Route>
-          </Routes>
-        </Container>
-      </Box>
+        </Routes>
+      </Container>
     </HashRouter>
   );
 }

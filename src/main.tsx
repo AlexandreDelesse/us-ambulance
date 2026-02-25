@@ -15,7 +15,6 @@ import { CrewProvider } from "./Components/Crew/CrewContext.tsx";
 import { SnackbarProvider } from "notistack";
 
 createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
   <ReactKeycloakProvider
     initOptions={{ onLoad: "login-required", pkceMethod: "S256" }}
     authClient={keycloak}
@@ -33,5 +32,4 @@ createRoot(document.getElementById("root")!).render(
       </UserProvider>
     </SnackbarProvider>
   </ReactKeycloakProvider>
-  // </StrictMode>
 );
