@@ -33,7 +33,7 @@ export default function AdminCrewListPage() {
     navigate("/");
   };
 
-  if (isLoading) return <LogoLoader text="Chargement des équipages..." />;
+  if (isLoading) return <LogoLoader LoadingText="Chargement des équipages..." />;
   if (isError) return <ErrorHandler error={error} />;
 
   return (

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const AdminCrewSchema = z
   .object({
     CrewId: z.number(),
-    Token: z.string(),
+    Token: z.string().nullable(),
     Label: z.string(),
     Member1: z.string(),
     Member2: z.string(),
@@ -13,7 +13,7 @@ export const AdminCrewSchema = z
   })
   .transform((data) => ({
     CrewId: data.CrewId,
-    Token: data.Token,
+    Token: data.Token ?? "",
     Label: data.Label,
     Employee1: data.Member1,
     Employee2: data.Member2,
