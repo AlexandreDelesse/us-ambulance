@@ -12,18 +12,26 @@ import { postKilometer } from "./Kilometer.service";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
+import { useCrew } from "../Crew/CrewContext";
+import { queryClient } from "../../queryClient";
 
 export default function KilometerForm() {
   const [input, setInput] = useState("");
-
+  const { crew } = useCrew();
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationKey: ["Kilometers"],
-    mutationFn: (km: number) => postKilometer(233415, km),
+    mutationKey: ["Kilometers", crew?.CrewId],
+    mutationFn: (km: number) => postKilometer(crew?.CrewId ?? -1, km),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["Kilometers", crew?.CrewId] }),
   });
 
-  const save = () => console.log(input);
+  const km = Number(input);
+  const save = () => {
+    if (!input || isNaN(km) || km <= 0) return;
+    mutation.mutate(km);
+  };
 
   return (
     <Card
@@ -45,9 +53,6 @@ export default function KilometerForm() {
         }
       />
       <CardContent>
-        <Typography color={"blue"} variant="body1">
-          {/* {crew?.callSign} {crew?.vehicle} */}
-        </Typography>
         <Typography variant="caption">Derniere saisie</Typography>
         <DisplayKilometers />
         <TextField
@@ -64,7 +69,7 @@ export default function KilometerForm() {
           size="medium"
           variant="contained"
           color="primary"
-          disabled={mutation.isPending}
+          disabled={mutation.isPending || !input || km <= 0 || isNaN(km)}
         >
           Valider
         </Button>

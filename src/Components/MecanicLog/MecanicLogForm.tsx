@@ -6,23 +6,26 @@ import CarCrashIcon from "@mui/icons-material/CarCrash";
 import SendIcon from "@mui/icons-material/Send";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 import { postMecanicLog } from "./MecanicLog.service";
+import { useCrew } from "../Crew/CrewContext";
 
 export default function MecanicLogForm() {
   const [show, setShow] = useState(false);
   const [constat, setConstat] = useState("");
+  const { crew } = useCrew();
 
   const mutation = useMutation({
-    mutationKey: ["MesanicLogs", 233149],
-    mutationFn: () => postMecanicLog({ Constat: constat, CrewId: 233149 }),
+    mutationKey: ["MecanicLogs", crew?.CrewId],
+    mutationFn: () => postMecanicLog({ Constat: constat, CrewId: crew?.CrewId ?? -1 }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["MesanicLogs", 233149] });
-      setShow(!show);
+      queryClient.invalidateQueries({ queryKey: ["MecanicLogs", crew?.CrewId] });
+      setConstat("");
+      setShow(false);
     },
   });
 
   const handleSubmit = () => {
     if (!constat) return;
-    return mutation.mutate();
+    mutation.mutate();
   };
 
   if (!show)

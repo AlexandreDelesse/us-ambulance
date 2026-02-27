@@ -1,28 +1,31 @@
-import { Alert, CircularProgress, IconButton, Snackbar } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useMutation } from "@tanstack/react-query";
 import { patchJoblist } from "./Joblist.service";
 import { queryClient } from "../../queryClient";
 import type { JobCmd } from "./Job";
 import type { SyntheticEvent } from "react";
+import { useCrew } from "../Crew/CrewContext";
+import ErrorHandler from "../Utils/Error/ErrorHandler";
 
-interface AcknoledgeButtonProps {
+interface AcknowledgeButtonProps {
   jobId: string;
   icon?: boolean;
 }
 
-export default function AcknowledgeButton(props: AcknoledgeButtonProps) {
+export default function AcknowledgeButton(props: AcknowledgeButtonProps) {
   const { jobId, icon } = props;
+  const { crew } = useCrew();
   const mutation = useMutation({
-    mutationKey: ["Missions", 233149, jobId],
+    mutationKey: ["Missions", crew?.CrewId, jobId],
     mutationFn: patchJoblist,
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["Missions", 233149] }),
+      queryClient.invalidateQueries({ queryKey: ["Missions", crew?.CrewId] }),
   });
 
   const onClick = (e: SyntheticEvent) => {
     e.stopPropagation();
-    let cmd: JobCmd = { IsJob: true, JobId: props.jobId };
+    const cmd: JobCmd = { IsJob: true, JobId: jobId };
     mutation.mutate(cmd);
   };
 
@@ -40,20 +43,9 @@ export default function AcknowledgeButton(props: AcknoledgeButtonProps) {
             <ThumbUpIcon color="primary" />
           )}
         </IconButton>
-        <Snackbar
-          open={mutation.isError}
-          autoHideDuration={6000}
-          onClose={mutation.reset}
-        >
-          <Alert
-            onClose={mutation.reset}
-            severity="error"
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
-            Une erreur s'est produite !
-          </Alert>
-        </Snackbar>
+        {mutation.isError && (
+          <ErrorHandler error={mutation.error} onClose={() => mutation.reset()} />
+        )}
       </>
     );
 }

@@ -17,14 +17,14 @@ export default function DriverContainer() {
   });
 
   const mutation = useMutation({
-    mutationKey: ["Driver", 233415],
-    mutationFn: (driverId: number) => postDriver(233415, driverId),
+    mutationKey: ["Driver", crew?.CrewId],
+    mutationFn: (driverId: number) => postDriver(crew?.CrewId ?? -1, driverId),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["Driver", 233415] }),
+      queryClient.invalidateQueries({ queryKey: ["Driver", crew?.CrewId] }),
   });
 
   const handleOnClick = (driver: Driver, collection: Driver[]) => {
-    let newDriver = collection.filter((d) => d.DriverId !== driver.DriverId)[0];
+    const newDriver = collection.filter((d) => d.DriverId !== driver.DriverId)[0];
     if (!newDriver) return;
     return mutation.mutate(newDriver.DriverId);
   };

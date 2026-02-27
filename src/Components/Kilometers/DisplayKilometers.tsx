@@ -6,11 +6,13 @@ import { Typography } from "@mui/material";
 import QueryComponent from "../Utils/QueryComponent";
 import type { AxiosError } from "axios";
 import type { Kilometers } from "./Kilometer";
+import { useCrew } from "../Crew/CrewContext";
 
 export default function DisplayKilometers() {
+  const { crew } = useCrew();
   const query = useQuery<Kilometers, AxiosError>({
-    queryKey: ["Kilometers"],
-    queryFn: () => getKilometer(233415),
+    queryKey: ["Kilometers", crew?.CrewId],
+    queryFn: () => getKilometer(crew?.CrewId ?? -1),
   });
 
   const success = (data: Kilometers) => <Typography>{data.Km} Km</Typography>;

@@ -18,7 +18,7 @@ export default function VehiclePage() {
   );
 
   const query = useQuery<DisplayMecanicLog[], AxiosError>({
-    queryKey: ["MesanicLogs", crew?.CrewId],
+    queryKey: ["MecanicLogs", crew?.CrewId],
     queryFn: () => getMecanicLogs(crew?.CrewId ?? -1),
   });
 
