@@ -38,7 +38,6 @@ export default function UserAvatar() {
     setAnchorEl(null);
   };
 
-  console.log(keycloak.tokenParsed);
 
   if (initialized && keycloak.authenticated)
     return (
@@ -109,7 +108,10 @@ export default function UserAvatar() {
               <MenuItem>
                 <NotificationSwitch />
               </MenuItem>
-              <MenuItem onClick={() => navigate("Commande")}>
+              <MenuItem onClick={() => { navigate("admin/crews"); handleClose(); }}>
+                <Typography>Équipages</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => { navigate("Commande"); handleClose(); }}>
                 <Typography>Nouvelle commande</Typography>
               </MenuItem>
             </>

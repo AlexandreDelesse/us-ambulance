@@ -13,6 +13,8 @@ import JobEditPage from "./pages/JobEditPage";
 import KilometerPage from "./pages/KilometerPage";
 import CommandePage from "./pages/CommandePage";
 import WorkSessionPage from "./pages/WorkSessionPage";
+import AdminRoute from "./features/admin/AdminRoute";
+import AdminCrewListPage from "./features/admin/crews/AdminCrewListPage";
 
 function App() {
   return (
@@ -36,6 +38,10 @@ function App() {
               </Route>
 
               <Route path="Km" element={<KilometerPage />} />
+
+              <Route element={<AdminRoute />}>
+                <Route path="admin/crews" element={<AdminCrewListPage />} />
+              </Route>
 
               <Route path="*" element={<Page404 />} />
             </Route>

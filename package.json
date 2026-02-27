@@ -27,7 +27,8 @@
     "react-router": "^7.6.0",
     "react-signature-pad-wrapper": "^4.1.0",
     "router": "^2.2.0",
-    "ua-parser-js": "^2.0.9"
+    "ua-parser-js": "^2.0.9",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
